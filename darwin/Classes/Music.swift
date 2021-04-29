@@ -413,7 +413,8 @@ public class Player : NSObject, AVAudioPlayerDelegate {
                         }
                     } else { //network or else (file, but not on ios...)
                         DispatchQueue.global().async {
-                            if let url = URL(string: imageMetas)  {
+                            let urlString = String(imageMetas).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+                            if let url = URL(string: urlString!)  {
                                 if let data = try? Data.init(contentsOf: url), let image = UIImage(data: data) {
                                     let artwork = MPMediaItemArtwork(boundsSize: image.size, requestHandler: { (_ size : CGSize) -> UIImage in
                                         return image
